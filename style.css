@@ -1,0 +1,185 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f8f8f8;
+}
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: white;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    min-height: 100vh;
+}
+
+.header {
+    padding: 60px 20px 40px;
+    text-align: center;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+.title {
+    font-size: 1.5rem;
+    font-weight: 300;
+    color: #555;
+    margin-bottom: 30px;
+    letter-spacing: 2px;
+}
+
+.names {
+    font-size: 2.5rem;
+    font-weight: 400;
+    color: #2c3e50;
+}
+
+.name {
+    display: inline-block;
+    padding: 0 15px;
+}
+
+.and {
+    display: inline-block;
+    font-size: 2rem;
+    color: #95a5a6;
+    padding: 0 10px;
+}
+
+.content {
+    padding: 40px 20px;
+}
+
+.invitation {
+    text-align: center;
+    padding: 30px 20px;
+    margin-bottom: 40px;
+}
+
+.message {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #555;
+}
+
+.date-location {
+    background-color: #f8f9fa;
+    padding: 30px 20px;
+    margin-bottom: 40px;
+    border-radius: 8px;
+}
+
+.info-item {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.info-item:last-child {
+    margin-bottom: 0;
+}
+
+.info-item h3 {
+    font-size: 1.1rem;
+    color: #2c3e50;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.info-item p {
+    font-size: 0.95rem;
+    color: #555;
+    line-height: 1.6;
+}
+
+.families {
+    margin-bottom: 40px;
+}
+
+.family {
+    text-align: center;
+    padding: 20px;
+    margin-bottom: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+}
+
+.family p {
+    font-size: 0.95rem;
+    color: #555;
+    margin-bottom: 8px;
+}
+
+.family p:last-child {
+    margin-bottom: 0;
+}
+
+.family strong {
+    color: #2c3e50;
+}
+
+.contact {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.contact h3 {
+    font-size: 1.1rem;
+    color: #2c3e50;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.contact-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.contact-btn {
+    padding: 12px 24px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.contact-btn:hover {
+    background-color: #2980b9;
+}
+
+.footer {
+    text-align: center;
+    padding: 30px 20px;
+    background-color: #f8f9fa;
+    color: #7f8c8d;
+    font-size: 0.85rem;
+}
+
+/* Responsive design */
+@media (max-width: 480px) {
+    .names {
+        font-size: 2rem;
+    }
+    
+    .title {
+        font-size: 1.2rem;
+    }
+    
+    .contact-buttons {
+        flex-direction: column;
+    }
+    
+    .contact-btn {
+        width: 100%;
+        max-width: 300px;
+    }
+}
