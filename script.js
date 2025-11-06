@@ -221,8 +221,8 @@ function initKakaoMap() {
   const mapTarget = document.getElementById('kakao-map');
   if (!mapTarget) return;
 
-  const lat = 37.5281285720486;
-  const lng = 126.91993957616876;
+  const lat = 37.52808497891688;
+  const lng = 126.92279872448067;
   const zoom = parseInt(mapTarget.dataset.zoom || '16', 10);
   const level = Math.max(1, Math.min(14, 20 - zoom));
   const center = new kakao.maps.LatLng(lat, lng);
