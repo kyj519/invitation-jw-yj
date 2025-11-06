@@ -245,6 +245,7 @@ function initKakaoMap() {
     position: center,
     map,
   });
+  marker.setPosition(center);
 
   const overlayContent = document.createElement('div');
   overlayContent.className = 'map-overlay';
