@@ -30,7 +30,10 @@
 }
 
 html {
-  background: url('bkg2.jpg') center / cover fixed no-repeat;
+  background: url('bkg2.jpg');
+  background-repeat: repeat;          /* ← 핵심: 반복! */
+  background-size: auto;              /* 원본 크기로 */
+  background-position: top left;      /* 시작점 */
 }
 
 *, *::before, *::after {
