@@ -215,56 +215,61 @@ function renderStaticMap(mapTarget) {
   return true;
 }
 
-function initKakaoMap() {
-  if (!window.kakao || !window.kakao.maps) return;
-
+function initKakaoMapByPlace() {
   const mapTarget = document.getElementById('kakao-map');
   if (!mapTarget) return;
 
-  const lat = 37.5281285720486;
-  const lng = 126.91993957616876;
-  const zoom = parseInt(mapTarget.dataset.zoom || '16', 10);
-  const level = Math.max(1, Math.min(14, 20 - zoom));
-  const center = new kakao.maps.LatLng(lat, lng);
-
+  // 기본 지도 하나 만들고
   const map = new kakao.maps.Map(mapTarget, {
-    center,
-    level,
-    draggable: true,
-    scrollwheel: true,
-    disableDoubleClickZoom: false,
+    center: new kakao.maps.LatLng(37.5281285, 126.9199395), // 대충 여의도
+    level: 4,
   });
 
-  const zoomControl = new kakao.maps.ZoomControl();
-  map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+  // 장소 검색 객체
+  const places = new kakao.maps.services.Places();
 
-  const mapTypeControl = new kakao.maps.MapTypeControl();
-  map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
+  // 너가 찍고 싶은 건물 이름
+  const placeName = mapTarget.dataset.place || '더파티움 여의도';
 
-  const marker = new kakao.maps.Marker({
-    position: center,
-    map,
+  places.keywordSearch(placeName, function (data, status) {
+    if (status !== kakao.maps.services.Status.OK) {
+      // 실패하면 네가 만든 static map으로 떨어지게 해도 됨
+      console.warn('장소를 찾지 못했습니다:', placeName);
+      return;
+    }
+
+    // 가장 첫 결과 사용
+    const place = data[0];
+    const lat = place.y;
+    const lng = place.x;
+    const pos = new kakao.maps.LatLng(lat, lng);
+
+    // 지도 중심 이동
+    map.setCenter(pos);
+
+    // 마커 올리기
+    const marker = new kakao.maps.Marker({
+      map,
+      position: pos,
+    });
+
+    // 말풍선도 여기서
+    const overlayContent = document.createElement('div');
+    overlayContent.className = 'map-overlay';
+    overlayContent.innerHTML = `
+      <h3 class="map-overlay__title">${place.place_name}</h3>
+      <p class="map-overlay__address">${place.road_address_name || place.address_name || ''}</p>
+      <a class="map-overlay__link" href="https://map.kakao.com/link/to/${encodeURIComponent(place.place_name)},${lat},${lng}" target="_blank" rel="noopener">길찾기</a>
+    `;
+
+    const overlay = new kakao.maps.CustomOverlay({
+      content: overlayContent,
+      position: pos,
+      xAnchor: 0.5,
+      yAnchor: 1.35,
+    });
+    overlay.setMap(map);
   });
-  marker.setPosition(center);
-
-  const overlayContent = document.createElement('div');
-  overlayContent.className = 'map-overlay';
-  overlayContent.innerHTML = `
-    <h3 class="map-overlay__title">더파티움 여의도</h3>
-    <p class="map-overlay__address">서울 영등포구 은행로 30<br><span>(중소기업중앙회관 2층)</span></p>
-    <a class="map-overlay__link" href="https://map.kakao.com/link/to/%EB%8D%94%ED%8C%8A%ED%8B%B0%EC%9B%80%20%EC%97%AC%EC%9D%98%EB%8F%84,37.5258,126.9271" target="_blank" rel="noopener">길찾기</a>
-  `;
-
-  const overlay = new kakao.maps.CustomOverlay({
-    content: overlayContent,
-    position: center,
-    xAnchor: 0.5,
-    yAnchor: 1.35,
-  });
-
-  overlay.setMap(map);
-
-  markMapReady(mapTarget);
 }
 
 function handleKakaoMapError() {
@@ -293,13 +298,17 @@ function loadKakaoMap() {
   const existingScript = document.querySelector('script[data-kakaomap]');
   if (existingScript) {
     if (window.kakao && window.kakao.maps) {
-      window.kakao.maps.load(initKakaoMap);
+      script.onload = () => {
+        if (window.kakao && window.kakao.maps) {
+          window.kakao.maps.load(initKakaoMapByPlace);
+        }
+      };
     }
     return;
   }
 
   const script = document.createElement('script');
-  script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${KAKAO_MAP_APP_KEY}&autoload=false`;
+  script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${KAKAO_MAP_APP_KEY}&autoload=false&libraries=services`;
   script.async = true;
   script.defer = true;
   script.dataset.kakaomap = 'true';
