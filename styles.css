@@ -657,7 +657,14 @@ body.lightbox-open {
   }
 
   .hero__names {
-    font-size: clamp(2.4rem, 12vw, 3.2rem);
+    font-size: clamp(2.2rem, 10vw, 3rem);
+    flex-direction: column;
+    gap: 0.2rem;
+    align-items: center;
+  }
+
+  .hero__ampersand {
+    font-size: 0.8em;
   }
 
   .section-nav {
