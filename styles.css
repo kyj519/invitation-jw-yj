@@ -45,6 +45,17 @@ body {
   padding: clamp(1.4rem, 6vw, 3rem) clamp(0.8rem, 4vw, 2.2rem);
 }
 
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: url('bkg_floral_high.jpg') center / 800px auto repeat;
+  opacity: 0.1;
+  pointer-events: none;
+  z-index: -1;
+  filter: saturate(0.7);
+}
+
 img {
   max-width: 100%;
   display: block;
