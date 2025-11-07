@@ -160,6 +160,7 @@ code {
 
 .hero__name {
   font-weight: 500;
+  white-space: nowrap;
 }
 
 .hero__ampersand {
