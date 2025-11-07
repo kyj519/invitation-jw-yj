@@ -161,6 +161,8 @@ code {
 .hero__name {
   font-weight: 500;
   white-space: nowrap;
+  word-break: keep-all;
+  overflow-wrap: normal;
 }
 
 .hero__ampersand {
