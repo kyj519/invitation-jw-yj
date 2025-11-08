@@ -10,6 +10,7 @@
   <link rel="preload" href="https://use.typekit.net/ikx5fpe.css" as="style">
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="calendar/calendar.css">
+  <script src="https://developers.kakao.com/sdk/js/kakao.min.js" defer></script>
   <script src="script.js" defer></script>
   <script src="calendar/calendar.js" defer></script>
   <script>
@@ -59,11 +60,9 @@
 
     <section class="section section--countdown">
       <div class="panel countdown-card">
-        <p class="countdown-card__eyebrow">D-day</p>
+        <p class="countdown-card__eyebrow">결혼식 까지 남은 시간</p>
         <p class="countdown-card__value" id="hero-countdown-text" data-countdown-date="2026-03-08T12:10:00">
-          D-xxx
         </p>
-        <p class="countdown-card__note">서로의 새로운 시작을 함께해주세요</p>
       </div>
     </section>
 
@@ -71,6 +70,8 @@
       <a href="#schedule">예식 안내</a>
       <a href="#location">오시는 길</a>
       <a href="#gallery">사진첩</a>
+      <a href="#account">마음 전하는 곳</a>
+      <a href="#share">청첩장 공유하기</a>
     </nav>
 
     <main class="page">
@@ -78,7 +79,6 @@
         <div class="section-heading">
           <p class="section-heading__eyebrow">Schedule</p>
           <h2 class="section__title">예식 안내</h2>
-          <p class="section-heading__lead">토요일 오후, 여의도에서 새로운 시작을 함께해 주세요.</p>
         </div>
         <div class="schedule-grid">
           <article class="panel panel--calendar">
@@ -87,50 +87,18 @@
                 <button class="btn__wrapper prev" type="button" aria-label="이전 달 보기">
                   <svg class="prev" width="11" height="23" viewBox="381 624 11 23" xmlns="http://www.w3.org/2000/svg">
                     <g fill="none" fill-rule="evenodd" stroke-linecap="square" transform="translate(381, 624)">
-                      <path d="M0.3,11.7 L11.1,23.1" stroke-width="2" transform="translate(5.7, 17.4) scale(-1, -1) translate(-5.7, -17.4)"></path>
-                      <path d="M0.3,0.3 L11.1,11.7" stroke-width="2" transform="translate(5.7, 6) scale(-1, 1) translate(-5.7, -6)"></path>
+                      <path d="M0.3,11.7 L11.1,23.1" stroke-width="2"
+                        transform="translate(5.7, 17.4) scale(-1, -1) translate(-5.7, -17.4)"></path>
+                      <path d="M0.3,0.3 L11.1,11.7" stroke-width="2"
+                        transform="translate(5.7, 6) scale(-1, 1) translate(-5.7, -6)"></path>
                     </g>
                   </svg>
                 </button>
                 <div class="calendar">
                   <div class="calendar__header">
                     <div class="header__season" aria-hidden="true">
-                      <svg width="350" height="82" viewBox="0 0 350 82" xmlns="http://www.w3.org/2000/svg" id="seasons">
-                        <g id="winter">
-                          <circle fill="#FFFFFF" cx="8.5" cy="8.5" r="7.5"></circle>
-                          <path d="M10.1914062,0.30859375 C2.67796308,8.26445677 -3.08980853,17.7764221 3.3125,28.6347656 C9.98437474,39.9502947 11.757796,34.2596999 13.9902344,45.6210938 C16.086191,56.2879007 2.77202896,63.3876879 4.3046875,74.9140625 C5.54396402,84.2340546 13.5353443,89.9877083 16.0175781,98.6816406" fill="none"></path>
-                        </g>
-                        <g id="spring">
-                          <path d="M8.49023438,19.1347656 C1.30270336,29.7492023 -0.769546799,41.6346957 2.05859375,54.3613281" stroke="#2F590B" fill="none" stroke-width="1"></path>
-                          <g class="flower">
-                            <path d="M15.5566406,9.47460938 C10.7288259,9.99630664 7.18624346,16.1172825 13.0488281,17.484375 C19.4090417,18.9675093 20.7813567,12.7298889 16.0683594,9.58789062 L15.5566406,9.47460938" stroke-width="1" fill="#ECF158"></path>
-                            <path d="M12.1230469,9.73632812 C3.517263,-0.650664715 17.2924486,-0.751321104 17.2871094,9.1796875" stroke-width="1" fill="#E9B0B0" class="petal"></path>
-                            <path d="M17.5292969,9.90625 C25.9936584,2.1981089 32.1552105,12.7618762 19.9765625,13.7207031" stroke-width="1" fill="#C47474" class="petal"></path>
-                            <path d="M19.9765625,13.7207031 C21.9341725,14.3056276 32.2304919,32.8114908 16.5644531,18.6484375" stroke-width="1" fill="#C57070" class="petal"></path>
-                            <path d="M15.9414062,17.6640625 C12.0811844,27.1614337 6.52622684,22.3670394 9.99804687,16.1933594" stroke-width="1" fill="#E78282" class="petal"></path>
-                            <path d="M9.26367187,15.1171875 C1.41280793,14.5132749 6.47665559,4.45907747 11.7851562,9.76757812" stroke-width="1" fill="#D07A7A" class="petal"></path>
-                          </g>
-                        </g>
-                        <g id="summer">
-                          <circle fill="#ffc500" cx="39.75" cy="39.65" r="17.55"></circle>
-                          <path d="M8.459375,12.88125 L21.296875,24.9773437" stroke="#ffc500" stroke-width="1.3" class="shine"></path>
-                          <path d="M8.459375,12.88125 L21.296875,24.9773437" stroke="#ffc500" stroke-width="1.3" class="shine" transform="translate(95, 43.929297) rotate(135)"></path>
-                          <path d="M8.459375,12.88125 L21.296875,24.9773437" stroke="#ffc500" stroke-width="1.3" class="shine" transform="translate(-13.875357, 38.929297) rotate(-45)"></path>
-                          <path d="M8.459375,12.88125 L21.296875,24.9773437" stroke="#ffc500" stroke-width="1.3" class="shine" transform="translate(75.875357, 81.929297) rotate(182)"></path>
-                          <path d="M8.459375,12.88125 L21.296875,24.9773437" stroke="#ffc500" stroke-width="1.3" class="shine" transform="translate(80.878049, 5.92875) rotate(90)"></path>
-                          <path d="M8.459375,12.88125 L21.296875,24.9773437" stroke="#ffc500" stroke-width="1.3" class="shine" transform="translate(-3.878049, 75.92875) rotate(273)"></path>
-                          <path d="M8.459375,12.88125 L21.296875,24.9773437" stroke="#ffc500" stroke-width="1.3" class="shine" transform="translate(39.879134, -12.930838) rotate(43)"></path>
-                          <path d="M8.459375,12.88125 L21.296875,24.9773437" stroke="#ffc500" stroke-width="1.3" class="shine" transform="translate(35.879134, 95.930838) rotate(225)"></path>
-                        </g>
-                        <g id="fall" fill="none" fill-rule="evenodd" transform="translate(-1018, 400)">
-                          <g>
-                            <path d="M10.546875,30.3359375 C12.6465102,5.32092875 20.3465935,12.6242861 39.484375,7.16015625
-                            C58.6221565,1.6960264 58.6221565,23.3359375 84.4609375,23.3359375 C110.299718,23.3359375 113.403247,4.66833763 130.957031,0.953125" stroke="#704B2A" stroke-width="1.2"></path>
-                            <path d="M59.2604687,23.046875 C59.2604687,23.046875 66.6894531,6.375 79.546875,17.421875 C90.3869813,26.5375 83.36875,41.828125 69.496875,37.7453125 C55.625,33.6625 59.2604687,23.046875 59.2604687,23.046875 Z" fill="#EABC83"></path>
-                            <path d="M79.8333333,17.5625 C79.8333333,17.5625 84.0609375,18.24375 82.5401042,23.8 C81.0192708,29.35625 76.7427083,27.3296875 76.7427083,27.3296875 C76.7427083,27.3296875 72.3703125,26.4 73.584375,20.5640625 C74.7984375,14.728125 79.8333333,17.5625 79.8333333,17.5625 Z" fill="#B7754D"></path>
-                            <path d="M69.784375,37.403125 C69.784375,37.403125 71.3044271,44.0359896 64.9610937,45.7914062 C58.6177604,47.5468229 58.6200521,40.075 58.6200521,40.075 C58.6200521,40.075 57.9859375,35.6125 64.33125,33.5867187 C70.6765625,31.5609375 69.784375,37.403125 69.784375,37.403125 Z" fill="#B7754D"></path>
-                          </g>
-                        </g>
+                      <svg width="350" height="20" viewBox="0 0 350 40" xmlns="http://www.w3.org/2000/svg"
+                        id="seasons"></svg>
                       </svg>
                     </div>
                     <div class="calendar__month__year">
@@ -139,9 +107,12 @@
                     </div>
                   </div>
                   <div class="calendar__body">
-                    <svg width="150" height="150" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg" class="draw-circle" aria-hidden="true">
-                      <circle cx="150" cy="150" r="145" stroke="rgba(228, 168, 162, 0.2)" stroke-width="2" fill="none"></circle>
-                      <circle cx="150" cy="150" r="120" stroke="rgba(228, 168, 162, 0.25)" stroke-width="1" fill="none"></circle>
+                    <svg width="150" height="150" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg"
+                      class="draw-circle" aria-hidden="true">
+                      <circle cx="150" cy="150" r="145" stroke="rgba(228, 168, 162, 0.2)" stroke-width="2" fill="none">
+                      </circle>
+                      <circle cx="150" cy="150" r="120" stroke="rgba(228, 168, 162, 0.25)" stroke-width="1" fill="none">
+                      </circle>
                     </svg>
                     <div class="calendar__weekdays" aria-hidden="true">
                       <span>Sun</span>
@@ -158,13 +129,13 @@
                 <button class="btn__wrapper next" type="button" aria-label="다음 달 보기">
                   <svg class="next" width="11" height="23" viewBox="270 624 11 23" xmlns="http://www.w3.org/2000/svg">
                     <g fill="none" fill-rule="evenodd" stroke-linecap="square" transform="translate(270, 624)">
-                      <path d="M0.3,11.7 L11.1,23.1" stroke-width="2" transform="translate(5.7, 17.4) scale(1, -1) translate(-5.7, -17.4)"></path>
+                      <path d="M0.3,11.7 L11.1,23.1" stroke-width="2"
+                        transform="translate(5.7, 17.4) scale(1, -1) translate(-5.7, -17.4)"></path>
                       <path d="M0.3,0.3 L11.1,11.7" stroke-width="2"></path>
                     </g>
                   </svg>
                 </button>
               </div>
-              <p class="calendar__note">12:10 PM 본식 시작</p>
             </div>
           </article>
 
@@ -177,6 +148,9 @@
               <li>
                 <strong>장소</strong>
                 <span>여의도 더파티움 2층 파티움홀</span>
+                <div class="schedule-call">
+                  <a class="button button--ghost schedule-call__btn" href="tel:027840000">안내 전화 02-784-0000</a>
+                </div>
               </li>
               <li>
                 <strong>주차 안내</strong>
@@ -185,9 +159,9 @@
             </ul>
             <div class="schedule-actions">
               <a id="calendar-button" class="button schedule-actions__btn"
-                href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=%EC%A0%95%EC%9A%B0+%26+%EC%98%88%EC%A7%84+%EA%B2%B0%ED%98%BC%EC%8B%9D&dates=20260308T031000Z/20260308T051000Z&details=%EC%97%AC%EC%9D%98%EB%8F%84+%EB%8D%94%ED%8C%8A%ED%8B%B0%EC%9B%80+2F+%ED%8C%8A%ED%8B%B0%EC%9B%80%ED%99%80&location=%EC%84%9C%EC%9A%B8+%EC%98%81%EB%93%B1%ED%8F%AC%EA%B5%AC+%EC%9D%80%ED%96%89%EB%A1%9C+30"
+                href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=연준%26재우%20결혼식&dates=20260308T121000/20260308T140000&location=여의도%20더파티움%202층%20파티움홀"
                 target="_blank" rel="noopener"
-                data-google="https://calendar.google.com/calendar/render?action=TEMPLATE&text=%EC%A0%95%EC%9A%B0+%26+%EC%98%88%EC%A7%84+%EA%B2%B0%ED%98%BC%EC%8B%9D&dates=20260308T031000Z/20260308T051000Z&details=%EC%97%AC%EC%9D%98%EB%8F%84+%EB%8D%94%ED%8C%8A%ED%8B%B0%EC%9B%80+2F+%ED%8C%8A%ED%8B%B0%EC%9B%80%ED%99%80&location=%EC%84%9C%EC%9A%B8+%EC%98%81%EB%93%B1%ED%8F%AC%EA%B5%AC+%EC%9D%80%ED%96%89%EB%A1%9C+30"
+                data-google="https://calendar.google.com/calendar/render?action=TEMPLATE&text=연준%26재우%20결혼식&dates=20260308T121000/20260308T140000&location=여의도%20더파티움%202층%20파티움홀"
                 data-apple="wedding-invite.ics">
                 캘린더에 추가하기
               </a>
@@ -229,7 +203,8 @@
             <span class="travel-card__label">지하철</span>
             <p>
               <span class="line-badge line-badge--nine">9</span> 국회의사당역 3번 출구 도보 5분<br>
-              <span class="line-badge line-badge--five">5</span> 여의나루역 1번 출구 → 2번 출구 19140 정류장에서 마을버스 10번 승차 후 기계회관 정류장 하차
+              <span class="line-badge line-badge--five">5</span> 여의나루역 1번 출구 → 2번 출구 19140 정류장에서 마을버스 10번 승차 후 기계회관 정류장
+              하차
             </p>
           </article>
           <article class="travel-card">
@@ -249,13 +224,15 @@
 
         <div class="panel panel--links">
           <div class="button-row">
-            <a class="button button--ghost"
-              href="https://place.map.kakao.com/1485166493"
-              target="_blank" rel="noopener">
-              카카오맵으로 보기
+            <a class="button button--ghost" href="https://place.map.kakao.com/1485166493" target="_blank"
+              rel="noopener">
+              카카오맵 열기
             </a>
             <a class="button button--ghost" href="https://naver.me/GaldtBAQ" target="_blank" rel="noopener">
               네이버지도 열기
+            </a>
+            <a class="button button--ghost" href="https://tmap.life/badd2666" target="_blank" rel="noopener">
+              T맵 열기
             </a>
           </div>
         </div>
@@ -267,24 +244,75 @@
           <h2 class="section__title">사진첩</h2>
         </div>
         <div class="panel panel--gallery">
-          <div class="gallery-grid">
-            <div class="gallery-tile gallery-tile--hero" style="--gallery-image: url('imgs/1.jpg');"
-              data-image="imgs/1.jpg" role="button" tabindex="0" aria-label="사진 1 크게 보기"></div>
-            <div class="gallery-tile" style="--gallery-image: url('imgs/2.jpg');" data-image="imgs/2.jpg" role="button"
-              tabindex="0" aria-label="사진 2 크게 보기"></div>
-            <div class="gallery-tile gallery-tile--tall" style="--gallery-image: url('imgs/3.jpg');"
-              data-image="imgs/3.jpg" role="button" tabindex="0" aria-label="사진 3 크게 보기"></div>
-            <div class="gallery-tile" style="--gallery-image: url('imgs/4.jpg');" data-image="imgs/4.jpg" role="button"
-              tabindex="0" aria-label="사진 4 크게 보기"></div>
-            <div class="gallery-tile gallery-tile--wide" style="--gallery-image: url('imgs/5.jpg');"
-              data-image="imgs/5.jpg" role="button" tabindex="0" aria-label="사진 5 크게 보기"></div>
-            <div class="gallery-tile" style="--gallery-image: url('imgs/6.jpg');" data-image="imgs/6.jpg" role="button"
-              tabindex="0" aria-label="사진 6 크게 보기"></div>
-            <div class="gallery-tile" style="--gallery-image: url('imgs/7.jpg');" data-image="imgs/7.jpg" role="button"
-              tabindex="0" aria-label="사진 7 크게 보기"></div>
-            <div class="gallery-tile gallery-tile--tall" style="--gallery-image: url('imgs/8.jpg');"
-              data-image="imgs/8.jpg" role="button" tabindex="0" aria-label="사진 8 크게 보기"></div>
+          <div class="gallery-grid" id="gallery-grid" aria-live="polite"></div>
+          <div class="gallery-pagination" id="gallery-pagination" aria-label="사진첩 페이지"></div>
+        </div>
+      </section>
+
+      <section id="account" class="section section--schedule">
+        <div class="section-heading">
+          <p class="section-heading__eyebrow">Thanks To</p>
+          <h2 class="section__title">마음 전하는 곳</h2>
+          <p class="section-heading__lead">따뜻한 축복, 정성껏 전해주신다면 소중히 간직하겠습니다.</p>
+        </div>
+        <div class="account-grid">
+          <article class="account-card">
+            <div class="account-card__title">신랑측</div>
+            <ul class="account-list">
+              <li>
+                <div>
+                  <strong>김연준</strong>
+                  <span>우리은행 1002-123-456789</span>
+                </div>
+                <button type="button" class="account-copy" data-account-number="우리은행 1002-123-456789">복사</button>
+              </li>
+              <li>
+                <div>
+                  <strong>김연준 부모님</strong>
+                  <span>국민은행 123456-01-987654</span>
+                </div>
+                <button type="button" class="account-copy" data-account-number="국민은행 123456-01-987654">복사</button>
+              </li>
+            </ul>
+          </article>
+          <article class="account-card">
+            <div class="account-card__title">신부측</div>
+            <ul class="account-list">
+              <li>
+                <div>
+                  <strong>마재우</strong>
+                  <span>신한은행 110-987-654321</span>
+                </div>
+                <button type="button" class="account-copy" data-account-number="신한은행 110-987-654321">복사</button>
+              </li>
+              <li>
+                <div>
+                  <strong>마재우 부모님</strong>
+                  <span>농협 352-0000-1234-56</span>
+                </div>
+                <button type="button" class="account-copy" data-account-number="농협 352-0000-1234-56">복사</button>
+              </li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section id="share" class="section section--schedule">
+        <div class="section-heading">
+          <p class="section-heading__eyebrow">Share</p>
+          <h2 class="section__title">청첩장 공유하기</h2>
+          <p class="section-heading__lead">소중한 분들과 링크를 공유해 결혼 소식을 전해주세요.</p>
+        </div>
+        <div class="share-card">
+          <div class="share-buttons">
+            <button type="button" class="share-emoji-button" id="share-kakao" aria-label="카카오톡으로 공유">
+              💬
+            </button>
+            <button type="button" class="share-emoji-button share-emoji-button--ghost" id="share-link" aria-label="링크 복사하기">
+              🔗
+            </button>
           </div>
+          <p class="share-note">링크가 복사되면 원하는 채널에 붙여넣어 주세요.</p>
         </div>
       </section>
     </main>

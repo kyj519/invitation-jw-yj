@@ -42,7 +42,26 @@ document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
   });
 });
 
-const galleryTiles = Array.from(document.querySelectorAll('.gallery-tile'));
+const GALLERY_PAGE_SIZE = 6;
+const KAKAO_SHARE_KEY = '9ad6190b5a0e195986e9a8277530effb';
+const galleryGrid = document.getElementById('gallery-grid') || document.querySelector('.gallery-grid');
+const galleryPagination = document.getElementById('gallery-pagination') || document.querySelector('.gallery-pagination');
+const galleryImages = [
+  { src: 'imgs/1.jpg', variant: 'hero', alt: '사진 1' },
+  { src: 'imgs/2.jpg', alt: '사진 2' },
+  { src: 'imgs/3.jpg', variant: 'tall', alt: '사진 3' },
+  { src: 'imgs/4.jpg', alt: '사진 4' },
+  { src: 'imgs/5.jpg', variant: 'wide', alt: '사진 5' },
+  { src: 'imgs/6.jpg', alt: '사진 6' },
+  { src: 'imgs/7.jpg', alt: '사진 7' },
+  { src: 'imgs/8.jpg', variant: 'tall', alt: '사진 8' },
+  { src: 'imgs/4.jpg', alt: '사진 9' },
+  { src: 'imgs/5.jpg', variant: 'wide', alt: '사진 10' },
+  { src: 'imgs/6.jpg', alt: '사진 11' },
+  { src: 'imgs/1.jpg', variant: 'hero', alt: '사진 12' }
+];
+
+let galleryTiles = [];
 let lightbox;
 let lightboxImage;
 let lightboxCloseButton;
@@ -50,6 +69,8 @@ let lightboxPrevButton;
 let lightboxNextButton;
 let lastFocusedElement;
 let currentGalleryIndex = -1;
+let currentGalleryPage = 1;
+let kakaoInitialized = false;
 
 function createLightbox() {
   if (lightbox) return;
@@ -136,6 +157,7 @@ function updateLightboxImage(path) {
 }
 
 function showImageAt(index) {
+  if (galleryTiles.length === 0) return;
   if (index < 0) {
     index = galleryTiles.length - 1;
   } else if (index >= galleryTiles.length) {
@@ -158,8 +180,7 @@ function showPreviousImage() {
   showImageAt(currentGalleryIndex - 1);
 }
 
-galleryTiles.forEach((tile, index) => {
-  tile.setAttribute('data-gallery-index', index);
+function bindGalleryTile(tile) {
   tile.addEventListener('click', () => openLightbox(tile));
   tile.addEventListener('keydown', (event) => {
     if (event.key === 'Enter' || event.key === ' ') {
@@ -167,7 +188,158 @@ galleryTiles.forEach((tile, index) => {
       openLightbox(tile);
     }
   });
+}
+
+function renderGallery(page = 1) {
+  if (!galleryGrid || galleryImages.length === 0) return;
+
+  const totalPages = Math.max(1, Math.ceil(galleryImages.length / GALLERY_PAGE_SIZE));
+  currentGalleryPage = Math.min(Math.max(page, 1), totalPages);
+  const startIndex = (currentGalleryPage - 1) * GALLERY_PAGE_SIZE;
+  const pageItems = galleryImages.slice(startIndex, startIndex + GALLERY_PAGE_SIZE);
+
+  const fragment = document.createDocumentFragment();
+  pageItems.forEach(({ src, variant, alt }, idx) => {
+    const tile = document.createElement('div');
+    tile.className = `gallery-tile${variant ? ` gallery-tile--${variant}` : ''}`;
+    tile.style.setProperty('--gallery-image', `url('${src}')`);
+    tile.dataset.image = src;
+    tile.setAttribute('role', 'button');
+    tile.setAttribute('tabindex', '0');
+    tile.setAttribute('aria-label', `${alt || `사진 ${startIndex + idx + 1}`} 크게 보기`);
+    fragment.appendChild(tile);
+  });
+
+  galleryGrid.innerHTML = '';
+  galleryGrid.appendChild(fragment);
+  galleryTiles = Array.from(galleryGrid.querySelectorAll('.gallery-tile'));
+  galleryTiles.forEach((tile, index) => {
+    tile.setAttribute('data-gallery-index', index);
+    bindGalleryTile(tile);
+  });
+
+  updateGalleryPagination(totalPages);
+}
+
+function updateGalleryPagination(totalPages) {
+  if (!galleryPagination) return;
+  galleryPagination.innerHTML = '';
+  if (totalPages <= 1) {
+    galleryPagination.setAttribute('hidden', 'hidden');
+    return;
+  }
+  galleryPagination.removeAttribute('hidden');
+
+  for (let page = 1; page <= totalPages; page += 1) {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = `gallery-pagination__button${page === currentGalleryPage ? ' is-active' : ''}`;
+    button.textContent = page;
+    button.setAttribute('aria-label', `${page} 페이지 보기`);
+    button.addEventListener('click', () => {
+      renderGallery(page);
+    });
+    galleryPagination.appendChild(button);
+  }
+}
+
+renderGallery();
+
+function copyText(text) {
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    return navigator.clipboard.writeText(text);
+  }
+  return new Promise((resolve, reject) => {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    textarea.style.position = 'fixed';
+    textarea.style.top = '-9999px';
+    document.body.appendChild(textarea);
+    textarea.focus();
+    textarea.select();
+    try {
+      document.execCommand('copy');
+      resolve();
+    } catch (error) {
+      reject(error);
+    } finally {
+      document.body.removeChild(textarea);
+    }
+  });
+}
+
+function showCopyFeedback(button) {
+  const original = button.textContent;
+  button.textContent = '복사 완료';
+  button.disabled = true;
+  setTimeout(() => {
+    button.textContent = original;
+    button.disabled = false;
+  }, 2000);
+}
+
+document.querySelectorAll('.account-copy').forEach((button) => {
+  button.addEventListener('click', () => {
+    const value = button.getAttribute('data-account-number');
+    if (!value) return;
+    copyText(value)
+      .then(() => showCopyFeedback(button))
+      .catch(() => alert('복사에 실패했습니다. 다시 시도해주세요.'));
+  });
 });
+
+const shareLinkButton = document.getElementById('share-link');
+if (shareLinkButton) {
+  shareLinkButton.addEventListener('click', () => {
+    const shareUrl = window.location.href;
+    copyText(shareUrl)
+      .then(() => showCopyFeedback(shareLinkButton))
+      .catch(() => alert('링크를 복사하지 못했습니다. 다시 시도해주세요.'));
+  });
+}
+
+function initKakaoShare() {
+  if (kakaoInitialized) return true;
+  if (!window.Kakao) return false;
+  if (!window.Kakao.isInitialized()) {
+    window.Kakao.init(KAKAO_SHARE_KEY);
+  }
+  kakaoInitialized = true;
+  return true;
+}
+
+const shareKakaoButton = document.getElementById('share-kakao');
+if (shareKakaoButton) {
+  shareKakaoButton.addEventListener('click', () => {
+    if (!initKakaoShare()) {
+      alert('카카오톡 공유 준비 중입니다. 잠시 후 다시 시도해주세요.');
+      return;
+    }
+    const shareUrl = window.location.href;
+    const shareTitle = document.title || '연준 ❤️ 재우 결혼식';
+    window.Kakao.Share.sendDefault({
+      objectType: 'feed',
+      content: {
+        title: shareTitle,
+        description: '3월 8일 여의도 더파티움에서 만나요.',
+        imageUrl: `${window.location.origin}/imgs/1.jpg`,
+        link: {
+          mobileWebUrl: shareUrl,
+          webUrl: shareUrl
+        }
+      },
+      buttons: [
+        {
+          title: '청첩장 열기',
+          link: {
+            mobileWebUrl: shareUrl,
+            webUrl: shareUrl
+          }
+        }
+      ]
+    });
+  });
+}
 
 const KAKAO_MAP_APP_KEY = '9ad6190b5a0e195986e9a8277530effb';
 
@@ -249,11 +421,7 @@ function initKakaoMap() {
 
   const overlayContent = document.createElement('div');
   overlayContent.className = 'map-overlay';
-  overlayContent.innerHTML = `
-    <h3 class="map-overlay__title">더파티움 여의도</h3>
-    <p class="map-overlay__address">서울 영등포구 은행로 30<br><span>(중소기업중앙회관 2층)</span></p>
-    <a class="map-overlay__link" href="https://map.kakao.com/link/to/%EB%8D%94%ED%8C%8A%ED%8B%B0%EC%9B%80%20%EC%97%AC%EC%9D%98%EB%8F%84,37.5258,126.9271" target="_blank" rel="noopener">길찾기</a>
-  `;
+;
 
   const overlay = new kakao.maps.CustomOverlay({
     content: overlayContent,

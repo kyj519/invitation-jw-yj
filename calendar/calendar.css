@@ -37,14 +37,14 @@
 .calendar__header {
   background: var(--calendar-theme);
   color: var(--white, #ffffff);
-  padding: 1.4rem 1rem 1rem;
+  padding: 1rem 1rem 0.6rem;
   display: grid;
-  gap: 1.1rem;
+  gap: 0.8rem;
 }
 
 .header__season {
   position: relative;
-  height: 82px;
+  height: 20px;
 }
 
 .header__season svg {
