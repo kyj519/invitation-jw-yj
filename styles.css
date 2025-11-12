@@ -17,7 +17,7 @@
   --radius-medium: 22px;
   --radius-small: 14px;
   --font-body: "gowun-dodum", sans-serif;
-  --font-display: "adobe-jenson-pro", serif;
+  --font-display: "adobe-jenson-pro-display", serif;
   /*--font-hero: "sandoll-gongbyunggaktab", sans-serif;*/
   --font-hero: "dunkel-serif-expanded", sans-serif;
   color: var(--text-body);
