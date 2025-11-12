@@ -269,13 +269,13 @@ function copyText(text) {
 }
 
 function showCopyFeedback(button) {
-  const original = button.textContent;
-  button.textContent = '복사 완료';
-  button.disabled = true;
+  const originalHTML = button.innerHTML;
+
+  button.innerHTML = '<span class="share-text">링크가 복사되었습니다</span>';
+
   setTimeout(() => {
-    button.textContent = original;
-    button.disabled = false;
-  }, 2000);
+    button.innerHTML = originalHTML;
+  }, 1200);
 }
 
 document.querySelectorAll('.account-copy').forEach((button) => {
@@ -290,14 +290,29 @@ document.querySelectorAll('.account-copy').forEach((button) => {
 
 const shareLinkButton = document.getElementById('share-link');
 if (shareLinkButton) {
-  shareLinkButton.addEventListener('click', () => {
+  shareLinkButton.addEventListener('click', async () => {
     const shareUrl = window.location.href;
+
+    // 1) Web Share API 지원되면 시스템 공유창 먼저
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: document.title,
+          url: shareUrl,
+        });
+        return; // 성공했으면 끝
+      } catch (err) {
+        // 사용자가 취소했으면 그냥 아래 복사로 떨어지게 놔둠
+        console.warn('share canceled or failed, fallback to copy', err);
+      }
+    }
+
+    // 2) 지원 안 되거나 실패하면 기존 로직으로 복사
     copyText(shareUrl)
       .then(() => showCopyFeedback(shareLinkButton))
       .catch(() => alert('링크를 복사하지 못했습니다. 다시 시도해주세요.'));
   });
 }
-
 function initKakaoShare() {
   if (kakaoInitialized) return true;
   if (!window.Kakao) return false;
@@ -316,12 +331,12 @@ if (shareKakaoButton) {
       return;
     }
     const shareUrl = window.location.href;
-    const shareTitle = document.title || '연준 ❤️ 재우 결혼식';
+    const shareTitle = document.title;
     window.Kakao.Share.sendDefault({
       objectType: 'feed',
       content: {
         title: shareTitle,
-        description: '3월 8일 여의도 더파티움에서 만나요.',
+        description: '3월 8일 오후 12:10 여의도 더파티움',
         imageUrl: `${window.location.origin}/imgs/1.jpg`,
         link: {
           mobileWebUrl: shareUrl,
