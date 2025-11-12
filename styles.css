@@ -295,7 +295,7 @@ code {
   margin: 0.2rem 0;
   font-size: clamp(2.6rem, 20vw, 5.4rem);
   letter-spacing: 0.16em;
-  font-family: "adobe-jenson-pro", serif;
+  font-family: adobe-jenson-pro-display, serif;
   font-weight: 400;
   font-style: normal;
   color: var(--text-strong);
