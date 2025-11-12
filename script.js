@@ -544,3 +544,45 @@ if (calendarButton) {
     });
   }
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+  const overlay = document.getElementById('rsvp-overlay');
+  if (!overlay) return;
+
+  const closeBtn = document.getElementById('rsvp-overlay-close');
+  const hideTodayCheckbox = document.getElementById('rsvp-hide-today');
+
+  // 오늘 날짜 문자열 만들기 (YYYY-MM-DD)
+  const today = new Date();
+  const y = today.getFullYear();
+  const m = String(today.getMonth() + 1).padStart(2, '0');
+  const d = String(today.getDate()).padStart(2, '0');
+  const todayStr = `${y}-${m}-${d}`;
+
+  const HIDE_KEY = 'rsvpHideDate';
+
+  // 저장된 날짜가 오늘이면 안 보이게
+  const saved = localStorage.getItem(HIDE_KEY);
+  if (saved === todayStr) {
+    overlay.classList.add('is-hidden');
+  } else {
+    overlay.classList.remove('is-hidden');
+  }
+
+  function closeOverlay() {
+    // 체크되어 있으면 오늘 날짜 저장
+    if (hideTodayCheckbox && hideTodayCheckbox.checked) {
+      localStorage.setItem(HIDE_KEY, todayStr);
+    }
+    overlay.classList.add('is-hidden');
+  }
+
+  closeBtn?.addEventListener('click', closeOverlay);
+
+  // 배경 클릭해도 닫기
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay || e.target.classList.contains('rsvp-overlay__backdrop')) {
+      closeOverlay();
+    }
+  });
+});
