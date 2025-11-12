@@ -280,14 +280,17 @@ function copyText(text) {
   });
 }
 
-function showCopyFeedback(button) {
-  const originalHTML = button.innerHTML;
+function showToast(message) {
+  const toast = document.getElementById('toast');
+  if (!toast) return;
 
-  button.innerHTML = '<span class="share-text">링크가 복사되었습니다</span>';
+  toast.textContent = message;
+  toast.classList.add('is-visible');
 
-  setTimeout(() => {
-    button.innerHTML = originalHTML;
-  }, 1200);
+  clearTimeout(showToast._timeout);
+  showToast._timeout = setTimeout(() => {
+    toast.classList.remove('is-visible');
+  }, 1300);
 }
 
 document.querySelectorAll('.account-copy').forEach((button) => {
@@ -295,7 +298,7 @@ document.querySelectorAll('.account-copy').forEach((button) => {
     const value = button.getAttribute('data-account-number');
     if (!value) return;
     copyText(value)
-      .then(() => showCopyFeedback(button))
+      .then(() => showToast('복사되었습니다'))
       .catch(() => alert('복사에 실패했습니다. 다시 시도해주세요.'));
   });
 });
@@ -321,8 +324,8 @@ if (shareLinkButton) {
 
     // 2) 지원 안 되거나 실패하면 기존 로직으로 복사
     copyText(shareUrl)
-      .then(() => showCopyFeedback(shareLinkButton))
-      .catch(() => alert('링크를 복사하지 못했습니다. 다시 시도해주세요.'));
+      .then(() => showToast('링크가 복사되었습니다'))
+      .catch(() => showToast('링크를 복사하지 못했습니다. 다시 시도해주세요.'));
   });
 }
 function initKakaoShare() {

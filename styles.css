@@ -1049,3 +1049,23 @@ body.lightbox-open {
 .rsvp-overlay__today input {
   accent-color: #b87a5b; /* 안 되면 생략 가능 */
 }
+/* -------- Toast Styles -------- */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 1.2rem;
+  transform: translateX(-50%) translateY(120%);
+  background: rgba(0,0,0,0.85);
+  color: #fff;
+  padding: 0.6rem 1.1rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  z-index: 9999;
+  transition: transform 0.28s ease-out, opacity 0.28s ease-out;
+  opacity: 0;
+  pointer-events: none;
+}
+.toast.is-visible {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
