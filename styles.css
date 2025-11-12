@@ -783,8 +783,75 @@ code {
 .gallery-tile--tall {
   min-height: 260px;
 }
+/* Lightbox 기본 레이어 */
+.gallery-lightbox {
+  position: fixed;
+  inset: 0;
+  display: none;               /* 기본은 숨김 */
+  background: rgba(0, 0, 0, 0.78);
+  z-index: 9999;
+  /* JS가 만든 구조: prev btn / figure / next btn 가로배치니까 flex */
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: 1.4rem;
+  padding: 1.2rem;
+}
 
-/* Lightbox --------------------------------------------------------------- */
+/* JS에서 이걸 붙이니까 이때 보이게 */
+.gallery-lightbox.gallery-lightbox--visible {
+  display: flex;
+}
+
+/* body 스크롤 잠그기용 */
+body.lightbox-open {
+  overflow: hidden;
+}
+
+.gallery-lightbox__figure {
+  position: relative;
+  max-width: min(920px, 95vw);
+  max-height: 92vh;
+}
+
+.gallery-lightbox__image {
+  max-width: 100%;
+  max-height: 92vh;
+  border-radius: 16px;
+  display: block;
+  background: #fff;
+}
+
+.gallery-lightbox__close {
+  position: absolute;
+  top: -2.6rem;
+  right: 0;
+  width: 2.4rem;
+  height: 2.4rem;
+  border: none;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.35);
+  color: #fff;
+  font-size: 1.4rem;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+}
+
+.gallery-lightbox__nav {
+  border: none;
+  background: rgba(0,0,0,0.35);
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 999px;
+  color: #fff;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+}
+
+
 @media (max-width: 540px) {
   .gallery-lightbox {
     padding: 0.5rem;              /* 여백 줄이기 */
