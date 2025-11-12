@@ -589,3 +589,31 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+  const audio = document.getElementById('bgm');
+  const btn = document.getElementById('music-toggle');
+  if (!audio || !btn) return;
+
+  // 일부 브라우저는 autoplay muted도 실패할 수 있으니 한번 시도
+  audio.play().catch(() => {
+    // 실패해도 무시
+  });
+
+  let muted = true; // 처음엔 muted 상태
+
+  btn.addEventListener('click', () => {
+    muted = !muted;
+    audio.muted = muted;
+
+    if (!muted) {
+      // 소리 켤 때 혹시 멈춰있으면 재생
+      audio.play().catch(() => {});
+      btn.textContent = '🔊';
+      btn.setAttribute('aria-label', '음악 끄기');
+    } else {
+      btn.textContent = '🔇';
+      btn.setAttribute('aria-label', '음악 켜기');
+    }
+  });
+});
