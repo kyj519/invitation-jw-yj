@@ -893,3 +893,34 @@ body.lightbox-open {
     animation-iteration-count: 1 !important;
   }
 }
+
+/* 달력 줄 정렬 기본값: 버튼 + 달력을 가운데로 */
+.calendar-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+}
+
+/* 달력 자체도 가운데 */
+.calendar {
+  margin: 0 auto;
+}
+
+/* 모바일일 때는 한 줄에 다 못 들어가니까 세로로 쌓고 폭 제한 */
+@media (max-width: 540px) {
+  .calendar-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* 안의 svg들이 고정폭이라도 화면 안에서만 보이게 */
+  .calendar svg {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .panel--calendar {
+    padding-inline: 0; /* 이미 바깥쪽에 패딩이 많아서 살짝 줄여줌 */
+  }
+}
