@@ -60,7 +60,7 @@ body::before {
   content: "";
   position: fixed;
   inset: 0;
-  background: url('bkg_floral_high.jpg') center / 800px auto repeat;
+  background: url('imgs/bkg_floral_high.webp') center / 800px auto repeat;
   opacity: 0.1;
   pointer-events: none;
   z-index: -1;
@@ -125,7 +125,7 @@ code {
   text-align: center;
   padding: clamp(4rem, 20vh, 8rem) 1.6rem;
   color: var(--white);
-  background: #2d2320 url('MSCG0659.jpg') center / cover no-repeat;
+  background: #2d2320 url('imgs/hero.webp') center / cover no-repeat;
   overflow: hidden;
   width: 100vw;
   min-height: 100vh;
@@ -177,7 +177,7 @@ code {
   flex-wrap: wrap;
   justify-content: center;
   font-family: var(--font-hero);
-  font-weight: 400;
+  font-weight: 900;
   font-size: clamp(2.6rem, 8vw, 3.8rem);
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -201,6 +201,7 @@ code {
   letter-spacing: 0.12em;
   text-transform: uppercase;
   font-family: var(--font-hero);
+  font-weight: 900;
   color: inherit;
 }
 

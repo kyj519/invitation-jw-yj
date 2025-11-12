@@ -47,18 +47,18 @@ const KAKAO_SHARE_KEY = '9ad6190b5a0e195986e9a8277530effb';
 const galleryGrid = document.getElementById('gallery-grid') || document.querySelector('.gallery-grid');
 const galleryPagination = document.getElementById('gallery-pagination') || document.querySelector('.gallery-pagination');
 const galleryImages = [
-  { src: 'imgs/1.jpg', variant: 'hero', alt: '사진 1' },
-  { src: 'imgs/2.jpg', alt: '사진 2' },
-  { src: 'imgs/3.jpg', variant: 'tall', alt: '사진 3' },
-  { src: 'imgs/4.jpg', alt: '사진 4' },
-  { src: 'imgs/5.jpg', variant: 'wide', alt: '사진 5' },
-  { src: 'imgs/6.jpg', alt: '사진 6' },
-  { src: 'imgs/7.jpg', alt: '사진 7' },
-  { src: 'imgs/8.jpg', variant: 'tall', alt: '사진 8' },
-  { src: 'imgs/4.jpg', alt: '사진 9' },
-  { src: 'imgs/5.jpg', variant: 'wide', alt: '사진 10' },
-  { src: 'imgs/6.jpg', alt: '사진 11' },
-  { src: 'imgs/1.jpg', variant: 'hero', alt: '사진 12' }
+  { src: 'photos/1.webp', variant: 'hero', alt: '사진 1' },
+  { src: 'photos/2.webp', alt: '사진 2' },
+  { src: 'photos/3.webp', variant: 'tall', alt: '사진 3' },
+  { src: 'photos/4.webp', alt: '사진 4' },
+  { src: 'photos/5.webp', variant: 'wide', alt: '사진 5' },
+  { src: 'photos/6.webp', alt: '사진 6' },
+  { src: 'photos/7.webp', alt: '사진 7' },
+  { src: 'photos/8.webp', variant: 'tall', alt: '사진 8' },
+  { src: 'photos/4.webp', alt: '사진 9' },
+  { src: 'photos/5.webp', variant: 'wide', alt: '사진 10' },
+  { src: 'photos/6.webp', alt: '사진 11' },
+  { src: 'photos/1.webp', variant: 'hero', alt: '사진 12' }
 ];
 
 let galleryTiles = [];
@@ -243,7 +243,19 @@ function updateGalleryPagination(totalPages) {
   }
 }
 
-renderGallery();
+const gallerySection = document.getElementById('gallery');
+let galleryRendered = false;
+
+const io = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting && !galleryRendered) {
+      renderGallery();
+      galleryRendered = true;
+      io.disconnect();
+    }
+  });
+});
+io.observe(gallerySection);
 
 function copyText(text) {
   if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -337,7 +349,7 @@ if (shareKakaoButton) {
       content: {
         title: shareTitle,
         description: '3월 8일 오후 12:10 여의도 더파티움',
-        imageUrl: `${window.location.origin}/imgs/1.jpg`,
+        imageUrl: `${window.location.origin}/photos/1.webp`,
         link: {
           mobileWebUrl: shareUrl,
           webUrl: shareUrl
