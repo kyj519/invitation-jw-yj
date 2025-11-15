@@ -384,12 +384,15 @@ if (shareKakaoButton) {
     }
     const shareUrl = window.location.href;
     const shareTitle = document.title;
+    const { origin, pathname } = window.location;
+const basePath = pathname.replace(/\/[^/]*$/, ''); // /invitation-jw-yj
+const imageUrl = `${origin}${basePath}/imgs/hero.webp`;
     window.Kakao.Share.sendDefault({
       objectType: 'feed',
       content: {
         title: shareTitle,
         description: '3월 8일 오후 12:10 여의도 더파티움',
-        imageUrl: `${window.location.origin}/imgs/hero.webp`,
+        imageUrl: imageUrl,
         link: {
           mobileWebUrl: shareUrl,
           webUrl: shareUrl
