@@ -389,7 +389,7 @@ if (shareKakaoButton) {
       content: {
         title: shareTitle,
         description: '3월 8일 오후 12:10 여의도 더파티움',
-        imageUrl: `${window.location.origin}/photos/1.webp`,
+        imageUrl: `${window.location.origin}/imgs/hero.webp`,
         link: {
           mobileWebUrl: shareUrl,
           webUrl: shareUrl
