@@ -1,32 +1,72 @@
+// 실제 보이는 화면 높이를 기준으로 --vh 세팅
+function setRealVh() {
+  const vh = window.innerHeight * 0.01;
+  document.documentElement.style.setProperty('--vh', `${vh}px`);
+}
+
+window.addEventListener('load', setRealVh);
+window.addEventListener('resize', setRealVh);
+window.addEventListener('orientationchange', setRealVh);
+
 const countdownTargets = document.querySelectorAll('[data-countdown-date]');
 
 /**
  * Renders a D-day style countdown text (D-23) or 오늘 if 0 days left.
  * The string is returned in Korean to match the invitation tone.
  */
+
+
 function renderCountdown(targetEl) {
   const targetDate = targetEl.getAttribute('data-countdown-date');
   if (!targetDate) return;
 
   const end = new Date(targetDate);
   const now = new Date();
-  const diff = end.setHours(0, 0, 0, 0) - now.setHours(0, 0, 0, 0);
 
-  if (Number.isNaN(diff)) {
+  const diffMs = end.getTime() - now.getTime();
+  if (Number.isNaN(diffMs)) {
     targetEl.textContent = '';
     return;
   }
 
-  const days = Math.round(diff / (1000 * 60 * 60 * 24));
+  const totalSeconds = Math.floor(diffMs / 1000);
+
+  if (totalSeconds < 0) {
+    targetEl.textContent = '새로운 시작을 함께 축하해주셔서 감사합니다';
+    return;
+  }
+
+  const daySec = 24 * 60 * 60;
+  const days = Math.floor(totalSeconds / daySec);
+  const remSeconds = totalSeconds % daySec;
+
+  const hours   = Math.floor(remSeconds / 3600);
+  const minutes = Math.floor((remSeconds % 3600) / 60);
+  const seconds = remSeconds % 60;
+
+  const pad = (n) => String(n).padStart(2, '0');
 
   if (days > 0) {
-    targetEl.textContent = `D-${days}`;
-  } else if (days < 0) {
-    targetEl.textContent = '새로운 시작을 함께 축하해주셔서 감사합니다';
+    targetEl.textContent = `D-${days} ${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
   } else {
-    targetEl.textContent = '오늘, 우리의 날이에요';
+    targetEl.textContent =
+      `오늘, 우리의 날이에요 · ${pad(hours)}:${pad(minutes)}:${pad(seconds)} 남았어요`;
   }
 }
+
+function startCountdown(selector) {
+  const el = document.querySelector(selector);
+  if (!el) return;
+
+  const tick = () => renderCountdown(el);
+  tick();
+  setInterval(tick, 1000);
+}
+
+// 🟢 DOM 준비된 후에 실행
+document.addEventListener('DOMContentLoaded', () => {
+  startCountdown('#hero-countdown-text');
+});
 
 countdownTargets.forEach((node) => renderCountdown(node));
 
@@ -42,24 +82,10 @@ document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
   });
 });
 
-const GALLERY_PAGE_SIZE = 6;
+const GALLERY_PAGE_SIZE = 31;
 const KAKAO_SHARE_KEY = '9ad6190b5a0e195986e9a8277530effb';
 const galleryGrid = document.getElementById('gallery-grid') || document.querySelector('.gallery-grid');
 const galleryPagination = document.getElementById('gallery-pagination') || document.querySelector('.gallery-pagination');
-const galleryImages = [
-  { src: 'photos/1.webp', variant: 'hero', alt: '사진 1' },
-  { src: 'photos/2.webp', alt: '사진 2' },
-  { src: 'photos/3.webp', variant: 'tall', alt: '사진 3' },
-  { src: 'photos/4.webp', alt: '사진 4' },
-  { src: 'photos/5.webp', variant: 'wide', alt: '사진 5' },
-  { src: 'photos/6.webp', alt: '사진 6' },
-  { src: 'photos/7.webp', alt: '사진 7' },
-  { src: 'photos/8.webp', variant: 'tall', alt: '사진 8' },
-  { src: 'photos/4.webp', alt: '사진 9' },
-  { src: 'photos/5.webp', variant: 'wide', alt: '사진 10' },
-  { src: 'photos/6.webp', alt: '사진 11' },
-  { src: 'photos/1.webp', variant: 'hero', alt: '사진 12' }
-];
 
 let galleryTiles = [];
 let lightbox;
@@ -199,14 +225,25 @@ function renderGallery(page = 1) {
   const pageItems = galleryImages.slice(startIndex, startIndex + GALLERY_PAGE_SIZE);
 
   const fragment = document.createDocumentFragment();
-  pageItems.forEach(({ src, variant, alt }, idx) => {
+  pageItems.forEach(({ src, variant, alt, aspect }, idx) => {
     const tile = document.createElement('div');
     tile.className = `gallery-tile${variant ? ` gallery-tile--${variant}` : ''}`;
     tile.style.setProperty('--gallery-image', `url('${src}')`);
+
+    if (aspect) {
+      // aspect = width / height (예: 1.5, 0.6667)
+      // CSS aspect-ratio도 width / height 이라 그대로 넣으면 됨
+      tile.style.aspectRatio = String(aspect);
+      // 혹시 숫자로 넣고 싶으면: tile.style.aspectRatio = aspect;
+    }
+
     tile.dataset.image = src;
     tile.setAttribute('role', 'button');
     tile.setAttribute('tabindex', '0');
-    tile.setAttribute('aria-label', `${alt || `사진 ${startIndex + idx + 1}`} 크게 보기`);
+    tile.setAttribute(
+      'aria-label',
+      `${alt || `사진 ${startIndex + idx + 1}`} 크게 보기`
+    );
     fragment.appendChild(tile);
   });
 
@@ -451,7 +488,7 @@ function initKakaoMap() {
 
   const overlayContent = document.createElement('div');
   overlayContent.className = 'map-overlay';
-;
+  ;
 
   const overlay = new kakao.maps.CustomOverlay({
     content: overlayContent,
@@ -463,7 +500,7 @@ function initKakaoMap() {
   overlay.setMap(map);
 
   markMapReady(mapTarget);
-    setTimeout(() => {
+  setTimeout(() => {
     map.relayout();
     map.setCenter(center);
   }, 100);
@@ -608,7 +645,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (!muted) {
       // 소리 켤 때 혹시 멈춰있으면 재생
-      audio.play().catch(() => {});
+      audio.play().catch(() => { });
       btn.textContent = '🔊';
       btn.setAttribute('aria-label', '음악 끄기');
     } else {

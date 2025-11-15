@@ -12,8 +12,11 @@
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="calendar/calendar.css">
   <script src="https://developers.kakao.com/sdk/js/kakao.min.js" defer></script>
-  <script src="script.js" defer></script>
   <script src="calendar/calendar.js" defer></script>
+  <script src="gallery.js" defer></script>
+  <script src="script.js" defer></script>
+
+
   <script>
     (function (d) {
       var config = {
@@ -203,11 +206,13 @@
           <article class="travel-card">
             <span class="travel-card__label">지하철</span>
             <p>
-              <span class="line-badge line-badge--nine">9</span> 국회의사당역 3번 출구 도보 5분<br>
+              <span class="line-badge line-badge--one">1</span> 신길역 1번 출구 → 1번 출구(19225) 정류장에서 360번 승차 후 여의도환승센터 정류장
+              하차<br>
+              <span class="line-badge line-badge--one">1</span> 영등포역 6번 출구 → 길 중앙에 위치한 영등포역(19005, 28035) 정류장에서 5618,
+              5615번 승차 후 여의도환승센터 정류장 하차<br>
               <span class="line-badge line-badge--five">5</span> 여의나루역 1번 출구 → 2번 출구(19140) 정류장에서 마을버스 10번 승차 후 기계회관 정류장
               하차 <br>
-              <span class="line-badge line-badge--one">1</span> 신길역 1번 출구 → 1번 출구(19225) 정류장에서 360번 승차 혹은 영등포역 6번 출구로 나와
-              길 중앙에 위치한 영등포역(19005, 28035) 정류장에서 5618, 5615번 승차 후 여의도환승센터 정류장 하차
+              <span class="line-badge line-badge--nine">9</span> 국회의사당역 3번 출구 도보 5분
 
             </p>
           </article>
@@ -222,7 +227,7 @@
           </article>
           <article class="travel-card">
             <span class="travel-card__label">자차 이용 시</span>
-            <p>네비게이션에 “더파티움여의도” 또는 “서울 영등포구 은행로 30”을 검색해 주세요. 주차 안내 데스크에서 등록하시면 제2주차장 이용도 가능합니다.</p>
+            <p>네비게이션에 “더파티움여의도” 또는 “서울 영등포구 은행로 30”을 검색해 주세요.</p>
           </article>
         </div>
 
@@ -234,9 +239,6 @@
             </a>
             <a class="button button--ghost" href="https://naver.me/GaldtBAQ" target="_blank" rel="noopener">
               네이버지도 열기
-            </a>
-            <a class="button button--ghost" href="https://tmap.life/badd2666" target="_blank" rel="noopener">
-              T맵 열기
             </a>
           </div>
         </div>
@@ -390,9 +392,9 @@
 
   <audio id="bgm" src="assets/music/wedding.mp3" autoplay muted playsinline loop></audio>
 
-  <button type="button" id="music-toggle" class="music-btn" aria-label="음악 켜기">
+  <!-- <button type="button" id="music-toggle" class="music-btn" aria-label="음악 켜기">
     🔇
-  </button>
+  </button> -->
 
 </body>
 
